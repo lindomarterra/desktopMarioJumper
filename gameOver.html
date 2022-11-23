@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Over Page</title>
+    <link rel="shortcut icon" href="imagens/marioIcon.png" type="image/x-icon">
+
+    <style>
+
+
+
+*{ padding:0; margin: 0; box-sizing: border-box;}
+
+@font-face {
+ font-family: 'mario';
+ src: url(fontes/super_mario_256/SuperMario256.ttf);
+}
+
+:root{
+    --color01: red;
+    --color02: blue;
+    --color03: green;
+    --color04: yellow;
+    --color05: white;
+    --color06: black;
+    --color07: lightblue;
+    --color08: lightgreen;
+    --color09: teal;
+    --color10: tomato;
+}
+
+
+/* PAGE GAME OVER */
+
+
+
+main{
+    width: 100vw;
+    height: 100vh;
+    background-image: linear-gradient(to right, var(--color08), var(--color08));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.gameOver{
+    width: 600px;
+    height: 400px;
+    background-image: linear-gradient(to right, var(--color09), var(--color05));
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 10px 10px 10px #222;
+    animation: fade Up 1s forwards;
+}
+@keyframes fade-up{
+    from{  transform: translate(0px, -200px); }
+    to{ transform: translate(0px, 0px);   }
+}
+.imgGameOver{
+    width: 275px;
+    height: 260px;
+    margin-top: 1rem;
+}
+.btn-block{
+    margin: 2rem;
+}
+.restart, .login{
+    background-color: var(--color10);
+    font-family: mario;
+    font-size: 2rem;
+    color: var(--color05);
+    padding: 1rem;
+    width: 200px;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 2px #222;
+    border: none;
+    box-shadow: 8px 8px 8px #222;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.restart:hover{ background-color: var(--color02);}
+
+.login:hover{ background-color: var(--color02);}
+
+
+
+    </style>
+  
+     
+</head>
+<body>
+    
+    <main>
+        <section class="gameOver">
+
+                <img src="imagens/marioGameOver.gif" alt="gameOverImg" class="imgGameOver">
+
+                <div class="btn-block">
+                    <button type="button" class="restart"  id="restart"  onclick="backGame()"  > restart </button>
+                    <button type="button" class="login"  id="login"  onclick="backLogin()"  > login </button>
+                </div>
+
+        </section>
+    </main>
+
+
+
+<script>
+
+
+function backGame(){
+    window.location = 'game.html'
+}
+
+
+// GAMEOVER PAGE  BACK LOGIN  //
+
+function backLogin(){
+window.location = 'index.html'
+}
+
+document.addEventListener('keydown', ({key}) => {
+    if(key === 'Enter'){
+        backGame()
+    }
+})
+
+
+
+</script>
+
+
+</body>
+</html>

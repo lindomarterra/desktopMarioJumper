@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Super Mario Game!</title>
+    <link rel="shortcut icon" href="imagens/marioIcon.png" type="image/x-icon">
+  
+    <style>
+
+*{ padding:0; margin: 0; box-sizing: border-box;}
+
+@font-face {
+ font-family: 'mario';
+ src: url(fontes/super_mario_256/SuperMario256.ttf);
+}
+
+:root{
+    --color01: red;
+    --color02: blue;
+    --color03: green;
+    --color04: yellow;
+    --color05: white;
+    --color06: black;
+    --color07: lightblue;
+    --color08: lightgreen;
+    --color09: teal;
+    --color10: tomato;
+}
+
+
+
+
+
+
+/*   PAGE GAME   */ 
+
+
+.setGame {
+    position: relative;
+    width: 100vw;
+    height: 95vh;
+    background-image: linear-gradient(var(--color07), var(--color05));
+    overflow: hidden;
+}
+.floor{
+    background-color: var(--color03);
+    width: 100vw;
+    height: 5vh;
+}
+
+.time{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 100px;
+    height:100px;
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 5px;
+    text-align: center;
+    padding-top: 10px;
+}
+.name{
+    font-family: mario;
+    text-shadow: 1px 1px 1px rgba(34, 34, 34, 0.788);
+    color: rgba(34, 34, 34, 0.753);
+    font-size: 1.2rem;
+}
+.value{
+    font-family: mario;
+    text-align: center;
+    font-size: 1.1rem;
+    padding: 10px;
+    text-shadow: 1px 1px 1px rgba(34, 34, 34, 0.788);
+}
+.red{ color: var(--color01);}
+.blue{ color: var(--color02);}
+.green{ color: var(--color03);}
+.yellow{ color: var(--color04);}
+
+
+
+
+
+/*   ELEMENTS OF GAME   */
+
+
+
+.mario{
+    width: 60px;
+    height: 70px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.jump{  animation: jump infinite .5s ease-out; }
+
+@keyframes jump{
+    0%{ bottom: 0;}
+    20%{ bottom: 105px;}
+    90%{ bottom: 105px;}
+    100%{ bottom: 0;}
+}
+
+.fly{ animation: fly 1.5s  ease-in-out;  }
+
+@keyframes fly{
+    0%{ bottom: 0; left: 0; } /* não é necessario fazer a propriedade 0%*/
+    15%{ bottom: 200px; left: 50px; }
+    30%{ bottom: 400px ; left: 150px; }
+    50%{ bottom: 400px ; left: 230px; }
+    70%{ bottom: 400px ; left: 230px; }
+    80%{ bottom: 200px; left: 150px; }
+    100%{ bottom: 0; left: 0; }
+}
+
+.low{ 
+    width: 40px; 
+    height: 40px;
+    position: absolute;
+    left: 20px;
+}
+.bullet{
+    width: 60px;
+    height: 40px;
+    position: absolute;
+    bottom: 40px;
+    right: -60px;
+    animation: bullet 3s infinite linear 2s ;
+}
+@keyframes bullet{
+    from{ right: -60px; }   to{ right: 100%; }
+}
+
+.pipe1{
+    position: absolute;
+    height: 80px;
+    width: 45px;
+    bottom: 0;
+    right: -45px;
+    animation: pipe1 infinite 3s linear;  
+}
+.pipe2{
+    position: absolute;
+    height: 50px;
+    width: 30px;
+    bottom: 0;
+    right: -30px;
+    animation: pipe2 infinite 3s linear 1s ;  
+}
+@keyframes pipe1{
+    from{ right: -45px;}  to{ right: 100%;}
+}
+@keyframes pipe2{
+    from{ right: -30px;}  to{ right: 100%;}
+}
+
+.star1{
+    position: absolute;
+    bottom: 400px ;
+    right: -30px;
+    animation: star1 4s infinite linear ;
+}
+.star2{
+    position: absolute;
+    top: 30%;
+    z-index: 10;
+    right: -30px;
+    animation: star1  4s infinite linear  2s;
+}
+@keyframes star1 {
+    from{ right: -30px;}  to{ right: 100%;}
+}
+@keyframes star2 {
+    from{ right: -30px;}  to{ right: 100%;}
+}
+
+.cloud1{
+    position: absolute;
+    top: 10%;
+    right: -350px;
+    animation: cloud1 30s infinite linear;
+}
+.cloud2{
+    position: absolute;
+    top: 25%;
+    right: -350px;
+    animation: cloud1 30s infinite linear 15s ;
+}
+@keyframes cloud1 {
+    from{ right: -350px;} to{ right: 100%;}
+}
+@keyframes cloud2 {
+    from{ right: -350px;} to{ right: 100%;}
+}
+
+
+    </style>
+
+
+
+
+</head>
+<body onload="timer()">
+    
+        <main class="setGame" id="setGame"  >
+
+                    <div class="time">
+                        <p class="name"> time </p>
+                        <p class="value red" id="valueTime" > 00 </p>
+                    </div>
+                
+                                   
+
+
+            <img src="imagens/marioRunning.gif" alt="mario" class="mario" id="mario">  <!--jump-->
+
+            <img src="imagens/bullet.png" alt="bullet" class="bullet" id="bullet" >
+
+            <img src="imagens/pipe.png" alt="pipe1" class="pipe1" id="pipe1">
+            <img src="imagens/pipe.png" alt="pipe2" class="pipe2" id="pipe2">
+
+            <img src="imagens/star.png" alt="star1" class="star1"  id="star1">
+           <img src="imagens/star.png" alt="star2" class="star2"  id="star2">  
+
+            <img src="imagens/cloud.png" alt="cloud1" class="cloud1">
+            <img src="imagens/cloud.png" alt="cloud2" class="cloud2">
+
+
+        </main>
+        <footer class="floor"></footer>
+
+    
+
+ <script>
+
+    
+ // JUMP //
+
+ const mario = document.getElementById('mario')
+
+function jump({key}){
+   if(key === 'ArrowUp'){
+       mario.classList.add('jump')
+   }
+   setTimeout(() =>{
+       mario.classList.remove('jump')
+   },500)
+}
+document.addEventListener('keydown', jump)
+
+
+
+// LOWER //
+
+
+function low({key}){
+   if( key === 'ArrowDown'){
+       mario.src = 'imagens/marioLowed.png'
+       mario.classList.add('low')
+   }
+}
+document.addEventListener('keydown', low )
+
+// RISE //
+
+function rise({key}){
+   if(key === 'ArrowDown'){
+       mario.src = 'imagens/marioRunning.gif'
+       mario.classList.remove('low')
+   }
+}
+
+document.addEventListener('keyup', rise)
+
+
+//  FLY //
+
+
+function fly({key}){
+   if(key === ' '){
+       mario.src = 'imagens/marioFlying.png'
+       mario.classList.add('fly')
+   }
+
+   setTimeout(() => {
+       mario.src = 'imagens/marioRunning.gif'
+       mario.classList.remove('fly')
+   },1500)}
+
+document.addEventListener('keypress', fly)
+
+
+//  STRIKE  PIPE 1  //
+
+ const strikePipeOne = setInterval( () => {
+
+   const pipe = document.getElementById('pipe1')
+   const pipePosition = pipe.offsetLeft
+   const marioPosition = +window.getComputedStyle(mario).bottom.replace('px', '')
+   
+   if( pipePosition <= 60 && pipePosition > 0 && marioPosition <= 80){
+          window.location = 'gameOver.html'
+   }})
+
+// STRIKE PIPE2 //
+
+const strikePipeTwo = setInterval( () => {
+
+    const pipe = document.getElementById('pipe2')
+    const pipePosition = pipe.offsetLeft
+    const marioPosition = +window.getComputedStyle(mario).bottom.replace('px', '')
+
+    if( pipePosition <= 60 && pipePosition > 0 && marioPosition < 50 ){
+              window.location = 'gameOver.html'
+    }})
+
+
+// STRIKE BULLET //
+
+
+ const strikeBullet = setInterval( () => {
+
+    const bullet = document.getElementById('bullet')
+    const bulletPosition = bullet.offsetLeft
+    const marioPosition = +window.getComputedStyle(mario).bottom.replace('px', '') 
+
+    if( bulletPosition <= 60  && marioPosition >= 40  && marioPosition <= 100 ){
+        window.location = 'gameOver.html'
+    }})
+    
+
+ //  SETTING TIMER //
+
+ let sec = 0
+ let min = 0
+
+function timer(){
+    counter()
+    setInterval( counter, 1000)
+}
+
+function twoDigits(digit){
+    if(digit<10){ return('0' + digit)} else{ return(digit)}
+}
+
+ function counter(){
+    sec++
+    if( sec === 60){
+        sec = 0
+        min++
+    }
+       if( min === 2){
+        window.location = 'gameOver.html'
+       }
+ 
+    document.getElementById('valueTime').innerText = twoDigits(min)  + ':' + twoDigits(sec)  
+ }
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ </script>       
+
+
+</body>
+</html>
